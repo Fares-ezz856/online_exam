@@ -25,9 +25,11 @@
                 @if(auth()->guard('admin')->check())
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                     <a href="{{ route('admin.exams.index') }}">Manage Exams</a>
+                    <a href="{{ route('admin.profile') }}">Profile</a>
                 @else
                     <a href="{{ route('student.dashboard') }}">Dashboard</a>
                     <a href="{{ route('student.dashboard') }}">My Exams</a>
+                    <a href="{{ route('student.profile') }}">Profile</a>
                 @endif
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf

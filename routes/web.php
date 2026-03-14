@@ -26,11 +26,18 @@ Route::middleware('auth:user')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Web\Student\WebStudentController::class, 'index'])->name('student.dashboard');
     Route::get('/exams/{exam}/take', [\App\Http\Controllers\Web\Student\WebStudentController::class, 'showExam'])->name('student.exams.taking');
     Route::post('/exams/{exam}/submit', [\App\Http\Controllers\Web\Student\WebStudentController::class, 'submitExam'])->name('student.exams.submit');
+    
+    Route::get('/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'showStudentProfile'])->name('student.profile');
+    Route::post('/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'updateStudentProfile']);
 });
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\Web\Admin\WebAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/deletequestion/{questionid}',[WebAdminController::class,'delete'])->name('admin.deletequestion');
+    
+    Route::get('/admin/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'showAdminProfile'])->name('admin.profile');
+    Route::post('/admin/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'updateAdminProfile']);
+
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('attempts', [\App\Http\Controllers\Web\Admin\WebAdminController::class, 'attempts'])->name('attempts.index');
         Route::resource('exams', \App\Http\Controllers\Web\Admin\WebExamController::class);
