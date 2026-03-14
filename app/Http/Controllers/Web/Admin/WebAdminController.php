@@ -18,13 +18,15 @@ class WebAdminController extends Controller
         $studentsCount = User::count();
 
         $recentExams = Exam::withCount('questions')->latest()->take(5)->get();
+        $recentAttempts = Attempt::with(['user', 'exam'])->latest()->take(5)->get();
 
         return view('admin.dashboard', compact(
             'examsCount',
             'questionsCount',
             'attemptsCount',
             'studentsCount',
-            'recentExams'
+            'recentExams',
+            'recentAttempts'
         ));
     }
 

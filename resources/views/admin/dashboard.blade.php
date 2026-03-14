@@ -55,4 +55,43 @@
         </table>
     </div>
 </div>
+
+<div style="margin-top: 3rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="font-weight: 700;">Recent Student Results</h2>
+        <a href="{{ route('admin.attempts.index') }}" style="color: var(--secondary); text-decoration: none; font-size: 0.9rem;">View All Results →</a>
+    </div>
+    <div class="glass-card" style="padding: 0;">
+        <table style="width: 100%; border-collapse: collapse; color: var(--text-main);">
+            <thead>
+                <tr style="border-bottom: 1px solid var(--glass-border);">
+                    <th style="padding: 1.5rem; text-align: left;">Student</th>
+                    <th style="padding: 1.5rem; text-align: left;">Exam</th>
+                    <th style="padding: 1.5rem; text-align: left;">Score</th>
+                    <th style="padding: 1.5rem; text-align: right;">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($recentAttempts as $attempt)
+                    <tr style="border-bottom: 1px solid var(--glass-border);">
+                        <td style="padding: 1.5rem; font-weight: 600;">{{ $attempt->user->name }}</td>
+                        <td style="padding: 1.5rem;">{{ $attempt->exam->title }}</td>
+                        <td style="padding: 1.5rem;">
+                            <span style="font-weight: 700; color: {{ $attempt->score >= 50 ? 'var(--success)' : 'var(--warning)' }}">
+                                {{ round($attempt->score) }}%
+                            </span>
+                        </td>
+                        <td style="padding: 1.5rem; text-align: right; color: var(--text-muted);">
+                            {{ $attempt->created_at->diffForHumans() }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="padding: 2rem; text-align: center; color: var(--text-muted);">No attempts recorded yet.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection

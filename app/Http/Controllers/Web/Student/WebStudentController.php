@@ -41,7 +41,9 @@ class WebStudentController extends Controller
             'user_id' => auth()->id(),
             'exam_id' => $exam->id,
             'score' => $percentage,
-            'completed_at' => now(),
+            'start_at' => now(), // Assuming start is now for simplicity, or could be passed from hidden field
+            'end_at' => now(),
+            'status' => 'completed',
         ]);
 
         return view('student.exams.result', [
