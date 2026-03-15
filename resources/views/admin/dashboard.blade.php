@@ -6,7 +6,7 @@
         <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--secondary);">Admin Dashboard</h1>
         <p style="color: var(--text-muted);">System Monitoring and Resource Management</p>
     </div>
-    <a href="#" class="btn btn-primary">Create New Exam</a>
+    <a href="{{ url('admin/exams/create') }}" class="btn btn-primary">Create New Exam</a>
 </div>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">

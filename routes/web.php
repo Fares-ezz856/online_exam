@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Admin\WebAdminController;
+use App\Http\Controllers\Web\Admin\WebExamController;
 use App\Http\Controllers\Web\Auth\WebAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,15 +27,18 @@ Route::middleware('auth:user')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Web\Student\WebStudentController::class, 'index'])->name('student.dashboard');
     Route::get('/exams/{exam}/take', [\App\Http\Controllers\Web\Student\WebStudentController::class, 'showExam'])->name('student.exams.taking');
     Route::post('/exams/{exam}/submit', [\App\Http\Controllers\Web\Student\WebStudentController::class, 'submitExam'])->name('student.exams.submit');
-    
+
     Route::get('/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'showStudentProfile'])->name('student.profile');
     Route::post('/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'updateStudentProfile']);
 });
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\Web\Admin\WebAdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/updatequestion/{questionid}', [WebAdminController::class, 'update'])->name('admin.updatequestion');
+    Route::post('/admin/updatequestion/{questionid}', [WebAdminController::class, 'updateQuestion'])->name('admin.updatequestion.submit');
+    Route::post('/admin/editquestion/{questionid}',[WebExamController::class,'edit'])->name('admin.editquestion');
     Route::get('/admin/deletequestion/{questionid}',[WebAdminController::class,'delete'])->name('admin.deletequestion');
-    
+
     Route::get('/admin/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'showAdminProfile'])->name('admin.profile');
     Route::post('/admin/profile', [\App\Http\Controllers\Web\Profile\WebProfileController::class, 'updateAdminProfile']);
 

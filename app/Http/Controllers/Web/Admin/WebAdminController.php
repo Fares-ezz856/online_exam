@@ -36,10 +36,35 @@ class WebAdminController extends Controller
         return view('admin.attempts.index', compact('attempts'));
     }
 
-    public function delete($questionid){
-        $question=Question::findOrFail($questionid);
-        $question->delete();
-        return redirect()->back()->with('success','question deleted successfully');
+    public function update($questionid){
+        $question=Question::with('options')->findOrFail($questionid);
+        return view('admin.exams.update',compact('question'));
     }
+
+    public function updateQuestion(\Illuminate\Http\Request $request, $questionid)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'options' => 'required|array|min:2',
+            'options.*' => 'required|string',
+            'correct_option' => 'required|integer',
+        ]);
+
+        $question = Question::findOrFail($questionid);
+        $question->update(['question' => $validated['title']]);
+
+        // Delete old options and create new ones (simplest way to update)
+        $question->options()->delete();
+
+        foreach ($validated['options'] as $index => $optionTitle) {
+            $question->options()->create([
+                'text_option' => $optionTitle,
+                'is_correct' => ($index == $validated['correct_option'])
+            ]);
+        }
+
+        return redirect()->route('admin.exams.show', $question->exam_id)->with('success', 'Question updated successfully.');
+    }
+
 
 }

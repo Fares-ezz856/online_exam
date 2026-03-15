@@ -60,4 +60,24 @@ class WebExamController extends Controller
 
         return back()->with('success', 'Question added successfully.');
     }
+    public function edit($questionid,Request $request){
+        $question=Question::findOrFail($questionid);
+          $validated = $request->validate([
+            'title' => 'required|string',
+            'options' => 'required|array|min:2',
+            'options.*' => 'required|string',
+            'correct_option' => 'required|integer',
+        ]);
+        $question->update([
+            'question'=>$validated['title'],
+            'grade'=>1
+        ]);
+
+        foreach($validated['options'] as $index =>$optiontitle){
+            $question->options()->update([
+                'text_option'=>$optiontitle,
+                'correct_option'=>($index == $validated['correct_option'])
+            ]);
+        }
+    }
 }

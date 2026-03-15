@@ -61,7 +61,7 @@
                     {{ $question->question }}
                 </h3>
                 <div style="display: flex; gap: 0.5rem;">
-                    <a href="{{ route('admin.deletequestion',$question->id) }}" style="background: none; border: none; color: var(--text-muted); cursor: pointer;">Edit</a>
+                    <a href="{{ route('admin.updatequestion',$question->id) }}" style="background: none; border: none; color: var(--text-muted); cursor: pointer;">Edit</a>
                     <a href="{{ route('admin.deletequestion',$question->id) }}" style="background: none; border: none; color: var(--danger); cursor: pointer;">Delete</a>
                 </div>
             </div>
