@@ -23,6 +23,7 @@ Route::post('admin/logout',[AuthAdminController::class,'logout'])->middleware('a
 Route::prefix('exams')->controller(ExamController::class)->middleware('auth:user,admin')->group(function(){
     Route::get('all','index');
     Route::post('create','create');
+    Route::delete('delete/{id}','delete');
 
 });
 
